@@ -1,11 +1,13 @@
 import "../styles/fonts.css";
 import { useState } from "react";
+import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { LoginScreen } from "./components/LoginScreen";
 import { Sidebar } from "./components/Sidebar";
 import { DashboardScreen } from "./components/DashboardScreen";
 import { MinorAuthScreen } from "./components/MinorAuthScreen";
 import { VehicleControlScreen } from "./components/VehicleControlScreen";
 import { SAGPDIScreen } from "./components/SAGPDIScreen";
+import { AccessibilityPanel } from "./components/AccessibilityPanel";
 
 type Screen = "dashboard" | "menores" | "vehiculos" | "sagpdi";
 
@@ -16,10 +18,11 @@ const screenTitles: Record<Screen, string> = {
   sagpdi: "Revisión SAG / PDI",
 };
 
-export default function App() {
+function AppInner() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [role, setRole] = useState("aduana");
   const [screen, setScreen] = useState<Screen>("dashboard");
+  const { isDark } = useTheme();
 
   function handleLogin(selectedRole: string) {
     setRole(selectedRole);
@@ -32,7 +35,10 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: "#EEF1F6", fontFamily: "Inter, system-ui, sans-serif" }}>
+    <div
+      className="flex h-screen overflow-hidden"
+      style={{ background: "var(--background)", fontFamily: "Inter, system-ui, sans-serif" }}
+    >
       <Sidebar
         activeScreen={screen}
         onNavigate={s => setScreen(s as Screen)}
@@ -45,41 +51,53 @@ export default function App() {
         <div
           className="flex items-center justify-between px-6 py-3"
           style={{
-            background: "#FFFFFF",
-            borderBottom: "1px solid rgba(27,58,107,0.12)",
+            background: "var(--card)",
+            borderBottom: "1px solid var(--border)",
             minHeight: "48px",
           }}
         >
+          {/* Left: breadcrumb */}
           <div className="flex items-center gap-3">
-            <div style={{ fontSize: "13px", fontWeight: 700, color: "#0D1B2A" }}>
+            <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--foreground)" }}>
               {screenTitles[screen]}
             </div>
-            <div className="h-3 w-px" style={{ background: "#D0D8E8" }} />
-            <span style={{ fontSize: "11px", color: "#9AAFCA" }}>
+            <div className="h-3 w-px" style={{ background: "var(--border)" }} />
+            <span style={{ fontSize: "11px", color: "var(--muted-foreground)" }}>
               Complejo Fronterizo Los Libertadores · Región de Valparaíso
             </span>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full" style={{ background: "#16A34A" }} />
-              <span style={{ fontSize: "10px", color: "#5A6A82", fontFamily: "JetBrains Mono, monospace" }}>
-                ADUANA-AR SYNC: OK
-              </span>
+
+          {/* Right: status + controls */}
+          <div className="flex items-center gap-3">
+            {/* System status indicators */}
+            <div className="flex items-center gap-3 mr-2">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ background: "#16A34A" }} />
+                <span style={{ fontSize: "10px", color: "var(--muted-foreground)", fontFamily: "JetBrains Mono, monospace" }}>
+                  ADUANA-AR: OK
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ background: "#16A34A" }} />
+                <span style={{ fontSize: "10px", color: "var(--muted-foreground)", fontFamily: "JetBrains Mono, monospace" }}>
+                  INTERPOL: OK
+                </span>
+              </div>
+              <div
+                className="px-2.5 py-1 rounded"
+                style={{ background: isDark ? "rgba(251,191,36,0.12)" : "#FEF3C7", border: "1px solid #FCD34D" }}
+              >
+                <span style={{ fontSize: "10px", fontWeight: 700, color: "#92400E" }}>
+                  Turno: 14:00–22:00
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full" style={{ background: "#16A34A" }} />
-              <span style={{ fontSize: "10px", color: "#5A6A82", fontFamily: "JetBrains Mono, monospace" }}>
-                INTERPOL: OK
-              </span>
-            </div>
-            <div
-              className="px-2.5 py-1 rounded"
-              style={{ background: "#FEF3C7", border: "1px solid #FCD34D" }}
-            >
-              <span style={{ fontSize: "10px", fontWeight: 700, color: "#92400E" }}>
-                Turno: 14:00–22:00
-              </span>
-            </div>
+
+            {/* Divider */}
+            <div className="h-5 w-px" style={{ background: "var(--border)" }} />
+
+            {/* Accessibility button */}
+            <AccessibilityPanel />
           </div>
         </div>
 
@@ -92,5 +110,13 @@ export default function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppInner />
+    </ThemeProvider>
   );
 }
