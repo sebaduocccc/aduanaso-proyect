@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {
-  AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
+  AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 import {
-  Users, Car, Clock, TrendingUp, TrendingDown, FileText, Download, Printer,
-  AlertCircle, CheckCircle, RefreshCw, ArrowUp, ArrowDown
+  Users, Car, Clock, FileText, Download, Printer,
+  AlertCircle, CheckCircle, RefreshCw, ArrowUp, ArrowDown,
 } from "lucide-react";
 
 const hourlyData = [
@@ -51,9 +51,9 @@ const alerts = [
 
 function StatCard({ label, value, sub, icon: Icon, trend, trendVal, color }: any) {
   return (
-    <div className="rounded p-5" style={{ background: "#FFFFFF", border: "1px solid rgba(27,58,107,0.1)" }}>
+    <div className="rounded p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center justify-center w-9 h-9 rounded" style={{ background: color + "15" }}>
+        <div className="flex items-center justify-center w-9 h-9 rounded" style={{ background: color + "22" }}>
           <Icon size={18} color={color} />
         </div>
         <div className="flex items-center gap-1" style={{ color: trend === "up" ? "#16A34A" : "#C8102E", fontSize: "11px", fontWeight: 600 }}>
@@ -61,9 +61,9 @@ function StatCard({ label, value, sub, icon: Icon, trend, trendVal, color }: any
           {trendVal}
         </div>
       </div>
-      <div style={{ fontSize: "26px", fontWeight: 700, color: "#0D1B2A", lineHeight: 1 }}>{value}</div>
-      <div style={{ fontSize: "11px", fontWeight: 700, color: "#5A6A82", marginTop: "4px", letterSpacing: "0.04em" }}>{label}</div>
-      <div style={{ fontSize: "10px", color: "#9AAFCA", marginTop: "2px" }}>{sub}</div>
+      <div style={{ fontSize: "26px", fontWeight: 700, color: "var(--foreground)", lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)", marginTop: "4px", letterSpacing: "0.04em" }}>{label}</div>
+      <div style={{ fontSize: "10px", color: "var(--muted-foreground)", marginTop: "2px", opacity: 0.7 }}>{sub}</div>
     </div>
   );
 }
@@ -72,12 +72,14 @@ export function DashboardScreen() {
   const [reportType, setReportType] = useState("diario");
 
   return (
-    <div className="flex-1 overflow-y-auto p-6" style={{ background: "#EEF1F6" }}>
+    <div className="flex-1 overflow-y-auto p-6" style={{ background: "var(--background)" }}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 style={{ color: "#0D1B2A", fontSize: "18px", fontWeight: 700 }}>Panel de Control — Complejo Los Libertadores</h1>
-          <p style={{ color: "#5A6A82", fontSize: "12px", marginTop: "2px" }}>
+          <h1 style={{ color: "var(--foreground)", fontSize: "18px", fontWeight: 700 }}>
+            Panel de Control — Complejo Los Libertadores
+          </h1>
+          <p style={{ color: "var(--muted-foreground)", fontSize: "12px", marginTop: "2px" }}>
             Martes 10 de junio de 2026 · Turno 14:00–22:00 · Jefatura: Subcomisario R. Morales
           </p>
         </div>
@@ -87,8 +89,7 @@ export function DashboardScreen() {
             <span style={{ fontSize: "11px", color: "#15803D", fontWeight: 600 }}>OPERACIONAL</span>
           </div>
           <button className="flex items-center gap-1.5 px-3 py-1.5 rounded" style={{ background: "#1B3A6B", color: "#fff", fontSize: "11px", fontWeight: 600, cursor: "pointer", border: "none" }}>
-            <RefreshCw size={11} />
-            Actualizar
+            <RefreshCw size={11} /> Actualizar
           </button>
         </div>
       </div>
@@ -103,33 +104,47 @@ export function DashboardScreen() {
 
       <div className="grid grid-cols-3 gap-4 mb-4">
         {/* Hourly chart */}
-        <div className="col-span-2 rounded p-5" style={{ background: "#FFFFFF", border: "1px solid rgba(27,58,107,0.1)" }}>
+        <div className="col-span-2 rounded p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <div style={{ fontSize: "12px", fontWeight: 700, color: "#0D1B2A" }}>Tránsito por Hora — Hoy</div>
-              <div style={{ fontSize: "10px", color: "#5A6A82" }}>Personas y vehículos procesados</div>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)" }}>Tránsito por Hora — Hoy</div>
+              <div style={{ fontSize: "10px", color: "var(--muted-foreground)" }}>Personas y vehículos procesados</div>
             </div>
             <div className="flex gap-3">
-              <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full" style={{ background: "#2563EB" }} /><span style={{ fontSize: "10px", color: "#5A6A82" }}>Personas</span></div>
-              <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full" style={{ background: "#7C3AED" }} /><span style={{ fontSize: "10px", color: "#5A6A82" }}>Vehículos</span></div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ background: "#2563EB" }} />
+                <span style={{ fontSize: "10px", color: "var(--muted-foreground)" }}>Personas</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ background: "#7C3AED" }} />
+                <span style={{ fontSize: "10px", color: "var(--muted-foreground)" }}>Vehículos</span>
+              </div>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={180}>
             <AreaChart data={hourlyData}>
               <defs>
                 <linearGradient id="gradP" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#2563EB" stopOpacity={0.15} />
+                  <stop offset="5%" stopColor="#2563EB" stopOpacity={0.18} />
                   <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="gradV" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#7C3AED" stopOpacity={0.15} />
+                  <stop offset="5%" stopColor="#7C3AED" stopOpacity={0.18} />
                   <stop offset="95%" stopColor="#7C3AED" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" />
-              <XAxis dataKey="hora" tick={{ fontSize: 9, fill: "#9AAFCA" }} />
-              <YAxis tick={{ fontSize: 9, fill: "#9AAFCA" }} />
-              <Tooltip contentStyle={{ fontSize: "11px", borderRadius: "4px", border: "1px solid #E4EAF3" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis dataKey="hora" tick={{ fontSize: 9, fill: "var(--muted-foreground)" }} />
+              <YAxis tick={{ fontSize: 9, fill: "var(--muted-foreground)" }} />
+              <Tooltip
+                contentStyle={{
+                  fontSize: "11px",
+                  borderRadius: "4px",
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
+                  color: "var(--foreground)",
+                }}
+              />
               <Area type="monotone" dataKey="personas" stroke="#2563EB" strokeWidth={2} fill="url(#gradP)" />
               <Area type="monotone" dataKey="vehiculos" stroke="#7C3AED" strokeWidth={2} fill="url(#gradV)" />
             </AreaChart>
@@ -137,28 +152,18 @@ export function DashboardScreen() {
         </div>
 
         {/* Queue status */}
-        <div className="rounded p-5" style={{ background: "#FFFFFF", border: "1px solid rgba(27,58,107,0.1)" }}>
-          <div style={{ fontSize: "12px", fontWeight: 700, color: "#0D1B2A", marginBottom: "4px" }}>Estado de Carriles</div>
-          <div style={{ fontSize: "10px", color: "#5A6A82", marginBottom: "14px" }}>Tiempo de espera en tiempo real</div>
+        <div className="rounded p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+          <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)", marginBottom: "4px" }}>Estado de Carriles</div>
+          <div style={{ fontSize: "10px", color: "var(--muted-foreground)", marginBottom: "14px" }}>Tiempo de espera en tiempo real</div>
           <div className="flex flex-col gap-2">
             {queue.map(q => (
-              <div key={q.carril} className="flex items-center justify-between px-3 py-2 rounded" style={{ background: "#F8FAFC", border: "1px solid #E4EAF3" }}>
+              <div key={q.carril} className="flex items-center justify-between px-3 py-2 rounded" style={{ background: "var(--muted)", border: "1px solid var(--border)" }}>
                 <div className="flex items-center gap-2">
-                  <div
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ background: q.estado === "ok" ? "#16A34A" : q.estado === "alert" ? "#D97706" : "#C8102E" }}
-                  />
-                  <span style={{ fontSize: "10px", fontWeight: 700, color: "#1B3A6B", fontFamily: "JetBrains Mono, monospace" }}>{q.carril}</span>
-                  <span style={{ fontSize: "10px", color: "#5A6A82" }}>{q.tipo}</span>
+                  <div className="w-1.5 h-1.5 rounded-full" style={{ background: q.estado === "ok" ? "#16A34A" : q.estado === "alert" ? "#D97706" : "#C8102E" }} />
+                  <span style={{ fontSize: "10px", fontWeight: 700, color: "var(--foreground)", fontFamily: "JetBrains Mono, monospace" }}>{q.carril}</span>
+                  <span style={{ fontSize: "10px", color: "var(--muted-foreground)" }}>{q.tipo}</span>
                 </div>
-                <span
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: 700,
-                    fontFamily: "JetBrains Mono, monospace",
-                    color: q.estado === "ok" ? "#16A34A" : q.estado === "alert" ? "#D97706" : "#C8102E",
-                  }}
-                >
+                <span style={{ fontSize: "10px", fontWeight: 700, fontFamily: "JetBrains Mono, monospace", color: q.estado === "ok" ? "#16A34A" : q.estado === "alert" ? "#D97706" : "#C8102E" }}>
                   {q.espera}
                 </span>
               </div>
@@ -169,21 +174,29 @@ export function DashboardScreen() {
 
       <div className="grid grid-cols-3 gap-4">
         {/* Weekly bar */}
-        <div className="col-span-2 rounded p-5" style={{ background: "#FFFFFF", border: "1px solid rgba(27,58,107,0.1)" }}>
+        <div className="col-span-2 rounded p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <div style={{ fontSize: "12px", fontWeight: 700, color: "#0D1B2A" }}>Entradas / Salidas — Semana Actual</div>
-              <div style={{ fontSize: "10px", color: "#5A6A82" }}>Total de personas procesadas por día</div>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)" }}>Entradas / Salidas — Semana Actual</div>
+              <div style={{ fontSize: "10px", color: "var(--muted-foreground)" }}>Total de personas procesadas por día</div>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={140}>
             <BarChart data={weeklyData} barGap={2}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
-              <XAxis dataKey="dia" tick={{ fontSize: 9, fill: "#9AAFCA" }} />
-              <YAxis tick={{ fontSize: 9, fill: "#9AAFCA" }} />
-              <Tooltip contentStyle={{ fontSize: "11px", borderRadius: "4px" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+              <XAxis dataKey="dia" tick={{ fontSize: 9, fill: "var(--muted-foreground)" }} />
+              <YAxis tick={{ fontSize: 9, fill: "var(--muted-foreground)" }} />
+              <Tooltip
+                contentStyle={{
+                  fontSize: "11px",
+                  borderRadius: "4px",
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
+                  color: "var(--foreground)",
+                }}
+              />
               <Bar dataKey="entradas" fill="#2563EB" radius={[2, 2, 0, 0]} name="Entradas" />
-              <Bar dataKey="salidas" fill="#A8C4E0" radius={[2, 2, 0, 0]} name="Salidas" />
+              <Bar dataKey="salidas" fill="#7C3AED" opacity={0.6} radius={[2, 2, 0, 0]} name="Salidas" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -191,32 +204,41 @@ export function DashboardScreen() {
         {/* Alerts + Reports */}
         <div className="flex flex-col gap-4">
           {/* Alerts */}
-          <div className="rounded p-4 flex-1" style={{ background: "#FFFFFF", border: "1px solid rgba(27,58,107,0.1)" }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, color: "#0D1B2A", marginBottom: "10px" }}>Alertas Recientes</div>
+          <div className="rounded p-4 flex-1" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--foreground)", marginBottom: "10px" }}>Alertas Recientes</div>
             <div className="flex flex-col gap-1.5">
               {alerts.map(a => (
-                <div key={a.id} className="flex items-start gap-2 px-2 py-1.5 rounded" style={{ background: a.nivel === "critical" ? "#FEF2F2" : a.nivel === "alert" ? "#FFFBEB" : "#F0FDF4", border: `1px solid ${a.nivel === "critical" ? "#FECACA" : a.nivel === "alert" ? "#FDE68A" : "#BBF7D0"}` }}>
+                <div
+                  key={a.id}
+                  className="flex items-start gap-2 px-2 py-1.5 rounded"
+                  style={{
+                    background: a.nivel === "critical" ? "rgba(200,16,46,0.08)" : a.nivel === "alert" ? "rgba(217,119,6,0.08)" : "rgba(22,163,74,0.08)",
+                    border: `1px solid ${a.nivel === "critical" ? "rgba(200,16,46,0.25)" : a.nivel === "alert" ? "rgba(217,119,6,0.25)" : "rgba(22,163,74,0.25)"}`,
+                  }}
+                >
                   <div className="mt-0.5">
-                    {a.nivel === "ok" ? <CheckCircle size={11} color="#16A34A" /> : <AlertCircle size={11} color={a.nivel === "critical" ? "#C8102E" : "#D97706"} />}
+                    {a.nivel === "ok"
+                      ? <CheckCircle size={11} color="#16A34A" />
+                      : <AlertCircle size={11} color={a.nivel === "critical" ? "#C8102E" : "#D97706"} />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div style={{ fontSize: "10px", fontWeight: 700, color: a.nivel === "critical" ? "#C8102E" : a.nivel === "alert" ? "#92400E" : "#15803D" }}>{a.tipo}</div>
-                    <div style={{ fontSize: "9px", color: "#5A6A82", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.detalle}</div>
+                    <div style={{ fontSize: "10px", fontWeight: 700, color: a.nivel === "critical" ? "#C8102E" : a.nivel === "alert" ? "#D97706" : "#16A34A" }}>{a.tipo}</div>
+                    <div style={{ fontSize: "9px", color: "var(--muted-foreground)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.detalle}</div>
                   </div>
-                  <span style={{ fontSize: "9px", color: "#9AAFCA", fontFamily: "JetBrains Mono, monospace", whiteSpace: "nowrap" }}>{a.hora}</span>
+                  <span style={{ fontSize: "9px", color: "var(--muted-foreground)", fontFamily: "JetBrains Mono, monospace", whiteSpace: "nowrap" }}>{a.hora}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Reports */}
-          <div className="rounded p-4" style={{ background: "#FFFFFF", border: "1px solid rgba(27,58,107,0.1)" }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, color: "#0D1B2A", marginBottom: "10px" }}>Generar Reporte</div>
+          <div className="rounded p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--foreground)", marginBottom: "10px" }}>Generar Reporte</div>
             <select
               value={reportType}
               onChange={e => setReportType(e.target.value)}
               className="w-full px-2 py-1.5 rounded mb-3 outline-none"
-              style={{ border: "1px solid #D0D8E8", fontSize: "11px", color: "#0D1B2A", background: "#F8FAFC" }}
+              style={{ border: "1px solid var(--border)", fontSize: "11px", color: "var(--foreground)", background: "var(--input-background)" }}
             >
               <option value="diario">Reporte Diario</option>
               <option value="semanal">Reporte Semanal</option>
@@ -225,16 +247,13 @@ export function DashboardScreen() {
             </select>
             <div className="flex gap-2">
               <button className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded" style={{ background: "#C8102E", color: "#fff", fontSize: "10px", fontWeight: 700, cursor: "pointer", border: "none" }}>
-                <Download size={11} />
-                PDF
+                <Download size={11} /> PDF
               </button>
               <button className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded" style={{ background: "#16A34A", color: "#fff", fontSize: "10px", fontWeight: 700, cursor: "pointer", border: "none" }}>
-                <FileText size={11} />
-                Excel
+                <FileText size={11} /> Excel
               </button>
               <button className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded" style={{ background: "#1B3A6B", color: "#fff", fontSize: "10px", fontWeight: 700, cursor: "pointer", border: "none" }}>
-                <Printer size={11} />
-                Imp.
+                <Printer size={11} /> Imp.
               </button>
             </div>
           </div>
