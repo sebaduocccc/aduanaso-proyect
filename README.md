@@ -1,11 +1,11 @@
 
-  # Border Automation Dashboard
+  # Proyecto Aduana argentina
 
-  This is a code bundle for Border Automation Dashboard. The original project is available at https://www.figma.com/design/y9Nob9adESvP9B02uJqWyc/Border-Automation-Dashboard.
+  Proyecto de aduana creado por Cristobal Spinola y Sebastian Saavedra. El proyecto original se encuentra en: https://www.figma.com/design/y9Nob9adESvP9B02uJqWyc/Border-Automation-Dashboard.
 
-  ## Running the code
+  ## Para ejecutar el codigo
 
-  Run `npm i` to install the dependencies.
+  Ejecutar `npm i` para instalar las dependencias.
 
-  Run `npm run dev` to start the development server.
+  Ejecutar `npm run dev` para empezar el proyecto.
   
